@@ -51,20 +51,3 @@ export default class Comment extends HTMLElement {
     }
   }
 }
-
-customElements.define("comment-com", Comment);
-
-export const createComment = () => {
-  const nameValue = document.getElementById("name").value;
-  const emailValue = document.getElementById("email").value;
-  const commentValue = document.getElementById("comment").value;
-
-  const component = document.createElement("comment-com");
-
-  component.setAttribute("name", nameValue);
-  component.setAttribute("email", emailValue);
-  component.setAttribute("comment", commentValue);
-
-  const results = document.querySelector("#results-field");
-  results.append(component);
-};

@@ -1,5 +1,11 @@
-import { createComment } from "./comment";
 import "./style.css";
+import {
+  getComments,
+  openDatabase,
+  postComments,
+  clearComments,
+} from "./js/indexedDB";
+import Comment from "./js/comment";
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -26,7 +32,8 @@ document.querySelector("#app").innerHTML = `
         <span><input type="checkbox" id="checkbox" name="checkbox" value="checked" required>
         </span><label id="agree">Agree to share info</label>
         <br><br>
-        <input value="submit" type="submit" id="submit">
+        <button type="submit" id="submit">Submit</button>
+        <button id="reset">Reset</button>
         <div id="results-field">
         </div>
       </form>
@@ -62,6 +69,7 @@ document.querySelector("#app").innerHTML = `
       #little {
         font-size: 10px;
       }
+
     </style>
     <div id="container">
       <div id="comment-output">
@@ -77,8 +85,38 @@ document.querySelector("#app").innerHTML = `
   </template>
 `;
 
+openDatabase();
+
+window.customElements.define("comment-com", Comment);
+
+const name = document.querySelector("#name");
+const email = document.querySelector("#email");
+const comment = document.querySelector("#comment");
+const agree = document.querySelector("#checkbox");
+const submit = document.querySelector("#submit");
+const reset = document.querySelector("#reset");
+const results = document.querySelector("#results-field");
+
 document.querySelector("form").addEventListener("submit", (ev) => {
   ev.preventDefault();
   createComment();
+  // window.location.reload();
 });
+
+document.querySelector;
 // document.querySelector("#submit").addEventListener("click", load());
+
+export const createComment = () => {
+  const nameValue = document.getElementById("name").value;
+  const emailValue = document.getElementById("email").value;
+  const commentValue = document.getElementById("comment").value;
+
+  postComments(nameValue, emailValue, commentValue);
+};
+
+reset.addEventListener("click", () => {
+  clearComments();
+  window.location.reload();
+});
+
+getComments(results);
